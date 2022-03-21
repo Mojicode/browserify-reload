@@ -9,7 +9,11 @@ const WSServer = require('ws').Server;
 //as it might not be processed by browserify transform, keep it ES5
 
 var connect = function(host, port) {
-  var sock = new WebSocket('ws://' + host + ':' + port);
+  var proto = "ws://";
+  if(document.location.protocol === "https:") {
+    proto = "wss://";
+  }
+  var sock = new WebSocket(proto + host + ':' + port);
   sock.onopen = function() {
     console.log("Connected to browserify-reload handle");
   }
